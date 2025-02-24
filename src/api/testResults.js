@@ -4,6 +4,7 @@ const API_URL = "http://localhost:5000/testResults";
 
 export const getTestResults = async () => {
   const response = await axios.get(API_URL);
+  console.log(response);
   return response.data;
 };
 export const createTestResult = async (resultData) => {
@@ -15,6 +16,6 @@ export const updateTestResultVisibility = async (id, visibility) => {
   return response.data;
 };
 export const deleteTestResult = async (id) => {
-    const response = await axios.delete(`${API_URL}/${id}`);
-    return response.data;
-  };
+  const response = await axios.delete(`${API_URL}/${id}`);
+  return response.data;
+};
