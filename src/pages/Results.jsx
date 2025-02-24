@@ -1,13 +1,14 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { getTestResults } from "../api/testResults";
+import { getTestResults, updateTestResultVisibility } from "../api/testResults";
 import { mbtiDescriptions } from "../utils/mbtiCalculator";
 import useAuthStore from "../zustand/authsStore";
 import Button from "../components/Button";
 
 const Results = () => {
+  const queryClient = useQueryClient();
   const { userId } = useAuthStore((state) => state.user);
-  
+
   const {
     data: testResults,
     isPending,
@@ -16,8 +17,11 @@ const Results = () => {
     queryKey: ["testResults"],
     queryFn: getTestResults,
   });
-  //
-  const handleToPublicResult = () => {};
+  const handleToPublicResult = async (e, id, visibility) => {
+    const resultVisibility = !visibility;
+    await updateTestResultVisibility(id, resultVisibility);
+    queryClient.invalidateQueries(["testResults"]);
+  };
 
   const handleDeleteResult = () => {};
   if (isPending) {
@@ -27,7 +31,6 @@ const Results = () => {
   if (isError) {
     return <div>데이터 조회 중 오류가 발생했습니다.</div>;
   }
-
 
   return (
     <div>
@@ -49,16 +52,15 @@ const Results = () => {
                 <p className="p-2">{mbtiDescriptions[result.mbtiResult]}</p>
               </div>
               {result.userId === userId && (
-                <div>
+                <div className="flex flex-row-reverse">
+                  <Button primary="" text="삭제" onClickFunc={(e) => {}} />{" "}
                   <Button
                     primary="true"
-                    text="공개로 전환"
-                    onClickFunc={handleToPublicResult}
-                  />
-                  <Button
-                    primary="false"
-                    text="삭제"
-                    onClickFunc={handleDeleteResult}
+                    text={result.visibility ? "비공개로 전환" : "공개로 전환"}
+                    onClickFunc={(e) => {
+                      //OnClickFunc함수의 e객체 **
+                      handleToPublicResult(e, result.id, result.visibility);
+                    }}
                   />
                 </div>
               )}

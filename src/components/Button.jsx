@@ -5,8 +5,8 @@ const Button = ({ primary, text, onClickFunc }) => {
   return (
     <button
       className={classNames(
-        "px-4 py-2 rounded text-white",
-        primary ? "bg-blue-500 w-10" : "bg-red-300 w-6 "
+        "px-4 py-2 m-1 rounded text-white",
+        primary  ? "bg-blue-600 " : "bg-red-500  "
       )}
       onClick={onClickFunc}
     >
