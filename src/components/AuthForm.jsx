@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Input from "../components/Input";
-import Button from "./Button";
+import AuthButton from "./AuthButton";
 import { useNavigate } from "react-router-dom";
 
 const AuthForm = ({ mode, onSubmitFunc }) => {
@@ -60,7 +60,7 @@ const AuthForm = ({ mode, onSubmitFunc }) => {
             onChangeFunc={(e) => setNickname(e.target.value)}
           />
         )}
-        <Button type="submit" text={logRef.current}></Button>
+        <AuthButton type="submit" text={logRef.current}></AuthButton>
       </form>{" "}
     </div>
   );

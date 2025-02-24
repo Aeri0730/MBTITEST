@@ -3,7 +3,7 @@ import useAuthStore from "../zustand/authsStore";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile, updateProfile } from "../api/auth";
 import Input from "../components/Input";
-import Button from "../components/Button";
+import AuthButton from "../components/AuthButton";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -70,7 +70,7 @@ const Profile = () => {
             value={newNickname}
             onChangeFunc={(e) => setNewNickname(e.target.value)}
           />
-          <Button type="submit" text="수정하기" />
+          <AuthoButton type="submit" text="수정하기" />
         </form>
       </div>
     </div>

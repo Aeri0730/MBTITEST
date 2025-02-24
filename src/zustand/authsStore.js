@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { persist } from "zustand/middleware";
 
 const token = localStorage.getItem("accessToken");
 const useAuthStore = create(
-  immer((set) => ({
+  persist((set) => ({
     token,
     isAuthenticated: !!token,
     user: { userId: "", nickname: "" },
@@ -17,7 +17,10 @@ const useAuthStore = create(
       set({ isAuthenticated: false });
       set({ user: null });
     },
-  }))
+  }),
+{
+  name:"now-user-storage",
+})
 );
 
 export default useAuthStore;
