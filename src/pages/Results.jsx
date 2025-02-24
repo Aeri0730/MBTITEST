@@ -1,6 +1,10 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { getTestResults, updateTestResultVisibility } from "../api/testResults";
+import {
+  deleteTestResult,
+  getTestResults,
+  updateTestResultVisibility,
+} from "../api/testResults";
 import { mbtiDescriptions } from "../utils/mbtiCalculator";
 import useAuthStore from "../zustand/authsStore";
 import Button from "../components/Button";
@@ -17,13 +21,24 @@ const Results = () => {
     queryKey: ["testResults"],
     queryFn: getTestResults,
   });
-  const handleToPublicResult = async (e, id, visibility) => {
-    const resultVisibility = !visibility;
-    await updateTestResultVisibility(id, resultVisibility);
+
+  const { mutate: visibleToggleMutation } = useMutation({
+    mutationFn: updateTestResultVisibility,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["testResults"] });
+    },
+  });
+
+  const { mutate: deleteMutation } = useMutation({
+    mutationFn: deleteTestResult,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["testResults"] });
+    },
+  });
+  const handleDeleteResult = async (e, id) => {
+    deleteTestResult(id);
     queryClient.invalidateQueries(["testResults"]);
   };
-
-  const handleDeleteResult = () => {};
   if (isPending) {
     return <div>로딩중입니다...</div>;
   }
@@ -53,14 +68,23 @@ const Results = () => {
               </div>
               {result.userId === userId && (
                 <div className="flex flex-row-reverse">
-                  <Button primary="" text="삭제" onClickFunc={(e) => {}} />{" "}
+                  <Button
+                    primary=""
+                    text="삭제"
+                    onClickFunc={() => {
+                      deleteMutation(result.id);
+                    }}
+                  />{" "}
                   <Button
                     primary="true"
                     text={result.visibility ? "비공개로 전환" : "공개로 전환"}
-                    onClickFunc={(e) => {
-                      //OnClickFunc함수의 e객체 **
-                      handleToPublicResult(e, result.id, result.visibility);
-                    }}
+                    onClickFunc={
+                      () =>
+                        visibleToggleMutation({
+                          id: result.id,
+                          visibility: !result.visibility,
+                        }) // 1개의 인자만 입력가능
+                    }
                   />
                 </div>
               )}
