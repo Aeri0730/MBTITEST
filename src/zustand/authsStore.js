@@ -6,13 +6,16 @@ const useAuthStore = create(
   immer((set) => ({
     token,
     isAuthenticated: !!token,
-    login: (token) => {
+    user: { userId: "", nickname: "" },
+    login: (token, userId, nickname) => {
       localStorage.setItem("accessToken", token);
       set({ isAuthenticated: true });
+      set({ user: { userId, nickname } });
     },
     logout: () => {
       localStorage.removeItem("accessToken");
       set({ isAuthenticated: false });
+      set({ user: null });
     },
   }))
 );

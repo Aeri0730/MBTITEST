@@ -5,8 +5,10 @@ import { createTestResult } from "../api/testResults";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "react-modal";
+import useAuthStore from "../zustand/authsStore";
 
 const TestPage = () => {
+  const { userId, nickname } = useAuthStore((state) => state.user);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -18,9 +20,15 @@ const TestPage = () => {
     },
   });
   const handleTestSubmit = async (answers) => {
-    const mbtiResult = await calculateMBTI(answers);
+    const mbtiResult = calculateMBTI(answers);
     setResult(mbtiResult);
-    const resultObj = { id: "aeri0730", mbtiResult: mbtiResult };
+    const resultObj = {
+      nickname: nickname,
+      mbtiResult: mbtiResult,
+      visibility: true,
+      date: new Date(),
+      userId: userId,
+    };
     mutate(resultObj);
     /* Test 결과는 mbtiResult 라는 변수에 저장이 됩니다. 이 데이터를 어떻게 API 를 이용해 처리 할 지 고민해주세요. */
   };

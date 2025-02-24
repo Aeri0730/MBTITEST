@@ -11,7 +11,9 @@ const Login = () => {
       const data = await login(userData);
       if (data.success) {
         navigate("/");
-        log_in(data.accessToken);
+        console.log(data);
+        console.log(data.userId, data.nickname);
+        log_in(data.accessToken, data.userId, data.nickname);
       } else {
         alert("Login failed!!!");
       }

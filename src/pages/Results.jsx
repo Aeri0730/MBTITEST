@@ -26,10 +26,13 @@ const Results = () => {
       {testResults.map((result, idx) => {
         return (
           <div
-            key={`result-${result.id}${idx}`}
+            key={`result-${result.id}`}
             className="p-8 m-8 border-2 border-solid rounded-xl"
           >
-            <p className="p-2 border-b-2 border-solid">{result.id}</p>
+            <div className="flex justify-between items-center border-b-2 border-solid">
+              <p className="p-2 ">{result.nickname}</p>
+              <p className="p-2 ">{result.date}</p>
+            </div>
             <div>
               <h1 className="text-3xl font-bold text-primary-color mb-2 p-2">
                 {result.mbtiResult}
