@@ -47,7 +47,7 @@ const AuthForm = ({ mode, onSubmitFunc }) => {
         <Input
           name="password"
           value={pw}
-          type="text"
+          type="password"
           placeholder="비밀번호"
           onChangeFunc={(e) => setPw(e.target.value)}
         />
