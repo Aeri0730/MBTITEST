@@ -31,9 +31,15 @@ const Header = () => {
           </p>
         </div>
       ) : (
-        <Link className="cursor-pointer" to="/login">
-          로그인
-        </Link>
+        <>
+          {" "}
+          <Link className="cursor-pointer" to="/login">
+            로그인
+          </Link>
+          <Link className="cursor-pointer" to="/signup">
+            회원가입
+          </Link>
+        </>
       )}
     </div>
   );
