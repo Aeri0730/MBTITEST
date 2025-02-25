@@ -32,13 +32,14 @@ const Header = () => {
         </div>
       ) : (
         <>
-          {" "}
-          <Link className="cursor-pointer" to="/login">
-            로그인
-          </Link>
-          <Link className="cursor-pointer" to="/signup">
-            회원가입
-          </Link>
+          <div className="flex justify-between">
+            <Link className="cursor-pointer" to="/login">
+              로그인
+            </Link>
+            <Link className="cursor-pointer" to="/signup">
+              회원가입
+            </Link>
+          </div>
         </>
       )}
     </div>
