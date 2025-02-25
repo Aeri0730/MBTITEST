@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "react-modal";
 import useAuthStore from "../zustand/authsStore";
+import { QUERY_KEYS } from "../constants/queryKeys";
 
 const TestPage = () => {
   const { userId, nickname } = useAuthStore((state) => state.user);
@@ -16,7 +17,7 @@ const TestPage = () => {
   const { mutate } = useMutation({
     mutationFn: createTestResult,
     onSuccess: () => {
-      queryClient.invalidateQueries(["testResults"]);
+      queryClient.invalidateQueries([QUERY_KEYS.TESTRESULTS]);
     },
   });
   const handleTestSubmit = async (answers) => {
@@ -47,11 +48,11 @@ const TestPage = () => {
             <h1 className="text-3xl font-bold text-primary-color mb-6">
               MBTI 테스트
             </h1>
-            <TestForm onSubmit={handleTestSubmit} />
+            <TestForm onSubmitFunc={handleTestSubmit} />
           </>
         ) : (
           <>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+            {/* <Modal isOpen={modalIsOpen} onRequestClose={closeModal}> */}
               <h1 className="text-3xl font-bold text-primary-color mb-6">
                 테스트 결과: {result}
               </h1>
@@ -65,7 +66,7 @@ const TestPage = () => {
               >
                 결과 페이지로 이동하기
               </button>
-            </Modal>
+            {/* </Modal> */}
           </>
         )}
       </div>

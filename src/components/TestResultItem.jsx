@@ -3,6 +3,7 @@ import { mbtiDescriptions } from "../utils/mbtiCalculator";
 import { getTestResults } from "../api/testResults";
 import { useQuery } from "@tanstack/react-query";
 import TestResultList from "./TestResultList";
+import { QUERY_KEYS } from "../constants/queryKeys";
 
 const TestResultItem = () => {
   const { userId } = useAuthStore((state) => state.user);
@@ -11,7 +12,7 @@ const TestResultItem = () => {
     isPending,
     isError,
   } = useQuery({
-    queryKey: ["testResults"],
+    queryKey: [QUERY_KEYS.TESTRESULTS],
     queryFn: getTestResults,
   });
 

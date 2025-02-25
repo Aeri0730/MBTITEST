@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { questions } from "../data/questions";
 
-const TestForm = ({ onSubmit }) => {
+const TestForm = ({ onSubmitFunc }) => {
   const [answers, setAnswers] = useState(
     Array(questions.length).fill({ type: "", answer: "" })
   );
@@ -14,7 +14,8 @@ const TestForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(answers);
+    console.log(answers);
+    onSubmitFunc(answers);
   };
 
   return (
@@ -33,9 +34,9 @@ const TestForm = ({ onSubmit }) => {
                 <input
                   type="radio"
                   name={`question-${index}`}
-                  value={option}
-                  checked={answers[index]?.answer === option}
-                  onChange={() => handleChange(index, option)}
+                  value={i}
+                  checked={answers[index]?.answer === i}
+                  onChange={() => handleChange(index, i)}
                   className="mr-2 text-primary-color"
                 />
                 {option}

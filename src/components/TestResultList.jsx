@@ -1,8 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import useAuthStore from "../zustand/authsStore";
-import { deleteTestResult, updateTestResultVisibility } from "../api/testResults";
+import {
+  deleteTestResult,
+  updateTestResultVisibility,
+} from "../api/testResults";
 import Button from "./Button";
+import { QUERY_KEYS } from "../constants/queryKeys";
 
 const TestResultList = ({ result }) => {
   const queryClient = useQueryClient();
@@ -11,14 +15,14 @@ const TestResultList = ({ result }) => {
   const { mutate: visibleToggleMutation } = useMutation({
     mutationFn: updateTestResultVisibility,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["testResults"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TESTRESULTS] });
     },
   });
 
   const { mutate: deleteMutation } = useMutation({
     mutationFn: deleteTestResult,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["testResults"] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TESTRESULTS] });
     },
   });
   return (
