@@ -4,17 +4,11 @@ import { getTestResults } from "../api/testResults";
 import { useQuery } from "@tanstack/react-query";
 import TestResultList from "./TestResultList";
 import { QUERY_KEYS } from "../constants/queryKeys";
+import { useGetResults } from "../hooks/queries";
 
 const TestResultItem = () => {
   const { userId } = useAuthStore((state) => state.user);
-  const {
-    data: testResults,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.TESTRESULTS],
-    queryFn: getTestResults,
-  });
+  const { data: testResults, isPending, isError } = useGetResults();
 
   if (isPending) {
     return <div>로딩중입니다...</div>;

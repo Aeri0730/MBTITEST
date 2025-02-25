@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../zustand/authsStore";
-
+import { IoHome } from "react-icons/io5";
 const Header = () => {
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -12,7 +12,9 @@ const Header = () => {
   };
   return (
     <div className="flex justify-between items-center px-5 bg-gray-200 h-10 text-red-600">
-      <Link to="/">홈</Link>
+      <Link to="/">
+        <IoHome />
+      </Link>
       {isAuthenticated ? (
         <div className="flex justify-between">
           <Link className="px-1" to="/profile">

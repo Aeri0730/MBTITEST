@@ -1,10 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
-import { getTodos } from "../services";
-import { QUERY_KEYS } from "../contansts/queryKeys";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getTestResults } from "../api/testResults";
+import { QUERY_KEYS } from "../constants/queryKeys";
 
-export const useTodos = () => {
+export const useGetResults = () => {
   return useQuery({
-    queryKey: [QUERY_KEYS.TODOS],
-    queryFn: getTodos,
+    queryKey: [QUERY_KEYS.TESTRESULTS],
+    queryFn: getTestResults,
+  });
+};
+
+export const EditResults = (ApiFunc) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ApiFunc,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TESTRESULTS] });
+    },
   });
 };

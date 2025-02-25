@@ -7,24 +7,18 @@ import {
 } from "../api/testResults";
 import Button from "./Button";
 import { QUERY_KEYS } from "../constants/queryKeys";
+import { EditResults } from "../hooks/queries";
 
 const TestResultList = ({ result }) => {
   const queryClient = useQueryClient();
   const { userId } = useAuthStore((state) => state.user);
 
-  const { mutate: visibleToggleMutation } = useMutation({
-    mutationFn: updateTestResultVisibility,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TESTRESULTS] });
-    },
-  });
+  const { mutate: visibleToggleMutation } = EditResults(
+    updateTestResultVisibility
+  );
 
-  const { mutate: deleteMutation } = useMutation({
-    mutationFn: deleteTestResult,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.TESTRESULTS] });
-    },
-  });
+  const { mutate: deleteMutation } = EditResults(deleteTestResult);
+
   return (
     <>
       {" "}
@@ -39,7 +33,7 @@ const TestResultList = ({ result }) => {
             primary="true"
             text={result.visibility ? "비공개로 전환" : "공개로 전환"}
             onClickFunc={() =>
-              visibleToggleMutation.mutate({
+              visibleToggleMutation({
                 id: result.id,
                 visibility: !result.visibility,
               })
