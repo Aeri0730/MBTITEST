@@ -1,17 +1,23 @@
 import useAuthStore from "../zustand/authsStore";
 import { mbtiDescriptions } from "../utils/mbtiCalculator";
-import { getTestResults } from "../api/testResults";
-import { useQuery } from "@tanstack/react-query";
 import TestResultList from "./TestResultList";
-import { QUERY_KEYS } from "../constants/queryKeys";
 import { useGetResults } from "../hooks/queries";
+import { TbTruckLoading } from "react-icons/tb";
 
 const TestResultItem = () => {
   const { userId } = useAuthStore((state) => state.user);
   const { data: testResults, isPending, isError } = useGetResults();
 
   if (isPending) {
-    return <div>로딩중입니다...</div>;
+    return (
+      <div>
+        {" "}
+        열심히 결과를 이송중입니다(대략 10초)...
+        <span>
+          <TbTruckLoading size={24} />
+        </span>
+      </div>
+    );
   }
 
   if (isError) {

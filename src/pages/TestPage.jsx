@@ -21,6 +21,7 @@ const TestPage = () => {
     },
   });
   const handleTestSubmit = async (answers) => {
+    setModalIsOpen(true);
     const mbtiResult = calculateMBTI(answers);
     setResult(mbtiResult);
     const resultObj = {
@@ -51,23 +52,25 @@ const TestPage = () => {
             <TestForm onSubmitFunc={handleTestSubmit} />
           </>
         ) : (
-          <>
-            {/* <Modal isOpen={modalIsOpen} onRequestClose={closeModal}> */}
-              <h1 className="text-3xl font-bold text-primary-color mb-6">
-                테스트 결과: {result}
-              </h1>
-              <p className="text-lg text-gray-700 mb-6">
-                {mbtiDescriptions[result] ||
-                  "해당 성격 유형에 대한 설명이 없습니다."}
-              </p>
-              <button
-                onClick={handleNavigateToResults}
-                className="w-full bg-primary-color text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition duration-300 hover:text-[#FF5A5F]"
-              >
-                결과 페이지로 이동하기
-              </button>
-            {/* </Modal> */}
-          </>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-white p-6 rounded-lg shadow-lg"
+          >
+            <h1 className="text-3xl font-bold text-primary-color mb-6">
+              테스트 결과: {result}
+            </h1>
+            <p className="text-lg text-gray-700 mb-6">
+              {mbtiDescriptions[result] ||
+                "해당 성격 유형에 대한 설명이 없습니다."}
+            </p>
+            <button
+              onClick={handleNavigateToResults}
+              className="w-full bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-primary-dark transition duration-300 hover:text-[#FF5A5F]"
+            >
+              결과 페이지로 이동하기
+            </button>
+          </Modal>
         )}
       </div>
     </div>
