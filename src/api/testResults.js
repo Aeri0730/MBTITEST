@@ -1,24 +1,23 @@
-import axios from "axios";
-
-const BASE_URL = import.meta.env.VITE_JSON_API_URL;
-const API_URL = BASE_URL + "/testResults";
+import { jsonApi } from "../axio/api";
 
 export const getTestResults = async () => {
-  const response = await axios.get(API_URL);
+  const response = await jsonApi.get("/");
   console.log(response);
   return response.data;
 };
 export const createTestResult = async (resultData) => {
-  const response = await axios.post(API_URL, resultData);
+  const response = await jsonApi.post("/",resultData);
   return response.data;
 };
-export const updateTestResultVisibility = async (props) => {
-  const response = await axios.patch(`${API_URL}/${props.id}`, {
-    visibility: props.visibility,
+export const updateTestResultVisibility = async ({id,visibility}) => {
+  if (!id) throw new Error("업데이트할 ID가 없습니다.");
+  const response = await jsonApi.patch(`/${id}`, {
+    visibility
   });
   return response.data;
 };
 export const deleteTestResult = async (id) => {
-  const response = await axios.delete(`${API_URL}/${id}`);
+  if (!id) throw new Error("삭제할 ID가 없습니다.");
+  const response = await jsonApi.delete(`/${id}`);
   return response.data;
 };
