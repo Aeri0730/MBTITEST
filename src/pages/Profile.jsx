@@ -70,7 +70,7 @@ const Profile = () => {
             value={newNickname}
             onChangeFunc={(e) => setNewNickname(e.target.value)}
           />
-          <AuthoButton type="submit" text="수정하기" />
+          <AuthButton type="submit" text="수정하기" />
         </form>
       </div>
     </div>
