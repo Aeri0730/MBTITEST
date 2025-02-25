@@ -11,20 +11,22 @@ export const login = async (userData) => {
   return response.data;
 };
 
-export const getUserProfile = async (token) => {
-  const response = await authApi.get("/user", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+export const getUserProfile = async () => {
+  const response = await authApi.get("/user");
   return response.data;
 };
 
-export const updateProfile = async (token, formData) => {
-  const profileHeader = {
+export const updateProfile = async (profileData) => {
+  const formData = new FormData();
+  if (profileData.nickname) {
+    formData.append("nickname", profileData.nickname);
+  }
+
+  const response = await authApi.patch("/profile", formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${token}`,
+     "Content-Type": "application/json", //text만 보내줄땐 "application/json"
     },
-  };
-  const response = await authApi.patch("/profile", formData, profileHeader);
+  });
+
   return response.data;
 };

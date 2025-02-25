@@ -11,14 +11,29 @@ const Profile = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const navigate = useNavigate();
   useEffect(() => {
+    // localStorage에서 데이터 가져오기
+    const storedData = JSON.parse(localStorage.getItem("now-user-storage"));
+
+    if (storedData) {
+      try {
+        // token 값 추출
+        const token = storedData?.state?.token;
+
+        console.log("Token:", token);
+      } catch (error) {
+        console.error("JSON 파싱 오류:", error);
+      }
+    } else {
+      console.log("저장된 데이터 없음");
+    }
+
     if (!isAuthenticated) {
       alert("로그인이 필요합니다.");
       navigate("/login");
     } else {
       const fetchUserInfo = async () => {
         try {
-          const token = localStorage.getItem("accessToken");
-          const data = await getUserProfile(token);
+          const data = await getUserProfile();
           setUserInfo(data);
         } catch (error) {
           console.error("Failed to fetch user info:", error);
@@ -29,11 +44,12 @@ const Profile = () => {
   }, [isAuthenticated, navigate]);
 
   const handleNicknameChange = async () => {
+    if (!newNickname.trim()) {
+      alert("닉네임을 입력하세요.");
+      return;
+    }
     try {
-      const token = localStorage.getItem("accessToken");
-      const formData = new FormData();
-      formData.append("nickname", newNickname);
-      const data = await updateProfile(token, formData);
+      const data = await updateProfile({ nickname: newNickname.trim() });
 
       if (data.success) {
         setUserInfo((prev) => ({

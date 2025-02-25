@@ -8,10 +8,10 @@ const Login = () => {
   const navigate = useNavigate();
   const handleLogin = async (userData) => {
     try {
-      const data = await login(userData);
-      if (data.success) {
+      const { accessToken, userId, nickname, success } = await login(userData);
+      if (success) {
         navigate("/");
-        log_in(data.accessToken, data.userId, data.nickname);
+        log_in(accessToken, userId, nickname);
       } else {
         alert("Login failed!!!");
       }
