@@ -18,8 +18,6 @@ const Profile = () => {
       try {
         // token 값 추출
         const token = storedData?.state?.token;
-
-        console.log("Token:", token);
       } catch (error) {
         console.error("JSON 파싱 오류:", error);
       }

@@ -24,7 +24,6 @@ const AuthForm = ({ mode, onSubmitFunc }) => {
               id,
               password: pw,
             };
-            console.log(`id= ${id}, pw=${pw}`);
             onSubmitFunc(formData);
           } else {
             const formData = {
@@ -32,7 +31,6 @@ const AuthForm = ({ mode, onSubmitFunc }) => {
               password: pw,
               nickname: nickname,
             };
-            console.log(`id= ${id}, pw=${pw}`);
             onSubmitFunc(formData);
           }
         }}

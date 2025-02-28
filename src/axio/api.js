@@ -16,7 +16,6 @@ authApi.interceptors.request.use(
     const {
       state: { token, user },
     } = JSON.parse(localStorage.getItem("now-user-storage"));
-    console.log("Interceptor Token:", token); // 디버깅용 콘솔 출력
     if (user && token) {
       // Authorization 헤더에 토큰 추가
       config.headers.Authorization = `Bearer ${token}`;

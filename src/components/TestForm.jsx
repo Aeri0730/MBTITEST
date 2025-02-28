@@ -14,7 +14,6 @@ const TestForm = ({ onSubmitFunc }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(answers);
     onSubmitFunc(answers);
   };
 
