@@ -18,15 +18,15 @@
   ![Home](./src/assets/images/Home.png)
 
 - Profile  
-  ![Profile](./src/assets/images/Profile)
+  ![Profile](./src/assets/images/Profile.png)
 
 - Test  
-  ![Test](./src/assets/images/TestPage)
+  ![Test](./src/assets/images/TestPage.png)
 
 - Results  
-  ![Results](./src/assets/images/Results)
+  ![Results](./src/assets/images/Results.png)
 - Loading  
-  ![Loading](./src/assets/images/Loading)
+  ![Loading](./src/assets/images/Loading.png)
 
 ---
 
